@@ -2,7 +2,7 @@
 # Setup High Available Kubernetes Cluster 
 
 
-``
+```
 sudo swapoff -a
 sudo sed -i '/swap/d' /etc/fstab
 sudo cat >>/etc/sysctl.d/kubernetes.conf<<EOF
