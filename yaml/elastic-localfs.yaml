@@ -1,0 +1,71 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: quickstart
+spec:
+  version: 7.14.0
+  # http:
+  #   tls:
+  #     selfSignedCertificate:
+  #       disabled: true
+  nodeSets:
+  - name: masters
+    count: 1
+    config:
+      node.roles: ["master"]
+    podTemplate:      
+      spec:
+        containers:
+        - name: elasticsearch
+          env:
+          - name: ES_JAVA_OPTS
+            value: -Xms8g -Xmx8g
+          resources:
+            requests:
+              memory: 4Gi
+              cpu: 8
+            limits:
+              memory: 16Gi      
+        volumes:
+        - name: elasticsearch-data
+          emptyDir: {}      
+    # volumeClaimTemplates:
+    # - metadata:
+    #     name: elasticsearch-data
+    #   spec:
+    #     accessModes:
+    #     - ReadWriteOnce
+    #     resources:
+    #       requests:
+    #         storage: 5Gi
+    #     storageClassName: standard          
+  - name: data
+    count: 2
+    config:
+      node.roles: ["data", "ingest", "transform"]
+    podTemplate:
+      spec:
+        containers:
+        - name: elasticsearch
+          env:
+          - name: ES_JAVA_OPTS
+            value: -Xms8g -Xmx8g
+          resources:
+            requests:
+              memory: 4Gi
+              cpu: 8
+            limits:
+              memory: 16Gi 
+        volumes:
+        - name: elasticsearch-data
+          emptyDir: {}
+    # volumeClaimTemplates:
+    # - metadata:
+    #     name: elasticsearch-data
+    #   spec:
+    #     accessModes:
+    #     - ReadWriteOnce
+    #     resources:
+    #       requests:
+    #         storage: 5Gi
+    #     storageClassName: standard          
