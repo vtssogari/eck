@@ -27,6 +27,7 @@ sudo systemctl stop firewalld
 
 sudo systemctl restart docker
 ```
+```
 sudo cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
