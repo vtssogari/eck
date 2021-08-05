@@ -45,10 +45,11 @@ sudo systemctl enable --now kubelet
 
 ```
 
-# HA Kubernetes
+HA Kubernetes
 sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=192.168.56.101 --control-plane-endpoint "192.168.56.101:6443" --upload-certs 
 
-# Single Kubernetes
+Single Kubernetes
+
 sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=192.168.56.101
 
 kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
